@@ -3,13 +3,9 @@ const express = require('express');
 const cors = require("cors");
 
 const MailController = require('./app/controllers/MailController');
-// const BullBoard = require('bull-board');
 const QueueNew = require('./app/lib/Queue');
 
 const app = express();
-const PORT = '3333'
-
-// BullBoard.setQueues(QueueNew.queues.map(queue => queue.bull));
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +20,7 @@ app.get("/test", (req, res) => {
 // app.use('/admin/queues', BullBoard.UI);
 
 QueueNew.process();
+const PORT = process.env.PORT || '3333'
 
 app.listen(PORT, () => {
   console.log('Server running on localhost:' + PORT);
